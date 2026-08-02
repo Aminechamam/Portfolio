@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mohamed Amine Chamam — Portfolio</title>
+<meta name="description" content="Mohamed Amine Chamam — front-end developer and software engineer based in Tunis. Hand-coded websites, machine learning and cybersecurity. Available for freelance work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%230d0d10'/><text y='68' x='50' text-anchor='middle' font-size='52' font-family='sans-serif' font-weight='700' fill='%238b9cff'>A</text></svg>">
+<style>
+:root{
+  --bg:#08080a;
+  --bg-soft:#0d0d11;
+  --surface:rgba(255,255,255,.028);
+  --surface-hi:rgba(255,255,255,.05);
+  --border:rgba(255,255,255,.085);
+  --border-hi:rgba(255,255,255,.16);
+  --text:#f0f0f3;
+  --text-2:#a8a8b4;
+  --text-3:#6e6e7d;
+  --accent:#8b9cff;
+  --accent-2:#c69bff;
+  --warm:#ffb27a;
+  --green:#5fd39a;
+  --r:18px;
+  --maxw:1180px;
+  --font:'Inter',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+html[dir="rtl"]{--font:'Noto Sans Arabic','Inter',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--font);
+  font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(680px 420px at 12% -6%, rgba(139,156,255,.13), transparent 70%),
+    radial-gradient(560px 400px at 92% 8%, rgba(198,155,255,.09), transparent 70%),
+    radial-gradient(700px 500px at 50% 108%, rgba(255,178,122,.05), transparent 70%);
+}
+body::after{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.5;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 100% 60% at 50% 0%,#000,transparent 75%);
+}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;}
+::selection{background:rgba(139,156,255,.32);}
+
+/* ---------- NAV ---------- */
+.nav{
+  position:fixed;top:0;inset-inline:0;z-index:100;
+  backdrop-filter:blur(18px) saturate(160%);
+  background:rgba(8,8,10,.62);
+  border-bottom:1px solid transparent;transition:border-color .3s,background .3s;
+}
+.nav.scrolled{border-bottom-color:var(--border);background:rgba(8,8,10,.85);}
+.nav-in{
+  max-width:var(--maxw);margin:0 auto;padding:0 22px;height:62px;
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.brand{display:flex;align-items:center;gap:9px;font-weight:600;letter-spacing:-.02em;font-size:14.5px;}
+.brand .dot{
+  width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+  background:linear-gradient(140deg,var(--accent),var(--accent-2));
+  color:#0a0a0c;font-weight:700;font-size:13px;font-family:var(--font);
+}
+.nav-links{display:flex;gap:2px;}
+.nav-links a{
+  padding:7px 12px;border-radius:9px;font-size:13.5px;color:var(--text-2);
+  transition:color .2s,background .2s;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--surface-hi);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.lang{
+  display:flex;gap:1px;padding:3px;border:1px solid var(--border);
+  border-radius:10px;background:var(--surface);
+}
+.lang button{
+  padding:4px 9px;border-radius:7px;font-size:11.5px;font-weight:600;
+  letter-spacing:.05em;color:var(--text-3);transition:.2s;font-family:var(--font);
+}
+.lang button:hover{color:var(--text-2);}
+.lang button.on{background:var(--text);color:#0a0a0c;}
+.burger{display:none;width:34px;height:34px;border-radius:9px;border:1px solid var(--border);place-items:center;}
+.burger span{display:block;width:15px;height:1.5px;background:var(--text);position:relative;transition:.25s;}
+.burger span::before,.burger span::after{content:'';position:absolute;inset-inline-start:0;width:15px;height:1.5px;background:var(--text);transition:.25s;}
+.burger span::before{top:-5px;}.burger span::after{top:5px;}
+.nav.open .burger span{background:transparent;}
+.nav.open .burger span::before{top:0;transform:rotate(45deg);}
+.nav.open .burger span::after{top:0;transform:rotate(-45deg);}
+
+/* ---------- LAYOUT ---------- */
+main{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 22px;}
+section{padding:78px 0 8px;scroll-margin-top:74px;}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:26px;flex-wrap:wrap;}
+.eyebrow{
+  font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--accent);display:flex;align-items:center;gap:9px;margin-bottom:11px;
+}
+.eyebrow::before{content:'';width:16px;height:1px;background:var(--accent);opacity:.6;}
+h2{font-size:clamp(26px,4vw,38px);font-weight:600;letter-spacing:-.035em;line-height:1.1;}
+.sec-note{font-size:13.5px;color:var(--text-3);max-width:340px;}
+
+/* ---------- BENTO ---------- */
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:13px;}
+.card{
+  position:relative;overflow:hidden;border-radius:var(--r);
+  border:1px solid var(--border);background:var(--surface);
+  padding:22px;transition:border-color .3s,transform .3s,background .3s;
+  backdrop-filter:blur(6px);
+}
+.card::before{
+  content:'';position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:radial-gradient(320px circle at var(--mx,50%) var(--my,50%),rgba(139,156,255,.11),transparent 62%);
+}
+.card:hover::before{opacity:1;}
+.card:hover{border-color:var(--border-hi);}
+.c4{grid-column:span 4;} .c3{grid-column:span 3;} .c2{grid-column:span 2;} .c6{grid-column:span 6;}
+.r2{grid-row:span 2;}
+
+/* ---------- HERO ---------- */
+#hero{padding-top:104px;}
+.hero-intro{display:flex;flex-direction:column;justify-content:space-between;gap:26px;padding:30px;}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;align-self:flex-start;
+  padding:5px 11px;border-radius:100px;border:1px solid var(--border);
+  background:var(--surface-hi);font-size:11.5px;font-family:var(--mono);
+  letter-spacing:.05em;color:var(--text-2);
+}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(95,211,154,.6);animation:pulse 2.4s infinite;}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(95,211,154,0);}100%{box-shadow:0 0 0 0 rgba(95,211,154,0);}}
+h1{font-size:clamp(34px,6.2vw,58px);font-weight:600;letter-spacing:-.045em;line-height:1.02;}
+h1 .grad{background:linear-gradient(100deg,var(--accent) 10%,var(--accent-2) 60%,var(--warm));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-role{font-size:15px;color:var(--text-2);margin-top:14px;max-width:44ch;}
+.hero-bio{font-size:14px;color:var(--text-3);margin-top:12px;max-width:52ch;line-height:1.72;}
+.btns{display:flex;gap:9px;flex-wrap:wrap;}
+.btn{
+  display:inline-flex;align-items:center;gap:7px;padding:10px 17px;border-radius:11px;
+  font-size:13.5px;font-weight:500;transition:.22s;border:1px solid transparent;
+}
+.btn-p{background:var(--text);color:#08080a;}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 8px 24px -8px rgba(255,255,255,.3);}
+.btn-s{border-color:var(--border);color:var(--text-2);background:var(--surface);}
+.btn-s:hover{border-color:var(--border-hi);color:var(--text);background:var(--surface-hi);}
+
+.stat{display:flex;flex-direction:column;justify-content:center;gap:5px;min-height:104px;}
+.stat-v{font-family:var(--mono);font-size:clamp(24px,3.4vw,33px);font-weight:500;letter-spacing:-.03em;line-height:1;}
+.stat-v.a{color:var(--accent);} .stat-v.b{color:var(--warm);} .stat-v.c{color:var(--green);}
+.stat-l{font-size:11.5px;color:var(--text-3);line-height:1.45;}
+.card-avail{display:flex;flex-direction:column;justify-content:space-between;gap:16px;min-height:120px;}
+.avail-row{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--text-3);gap:10px;}
+.avail-row b{color:var(--text-2);font-weight:500;}
+
+/* ---------- ABOUT ---------- */
+.about-txt p{color:var(--text-2);font-size:14.5px;line-height:1.78;}
+.about-txt p + p{margin-top:14px;}
+.tl{display:flex;flex-direction:column;gap:0;}
+.tl-i{display:grid;grid-template-columns:auto 1fr;gap:13px;padding-bottom:19px;position:relative;}
+.tl-i:last-child{padding-bottom:0;}
+.tl-i::before{
+  content:'';position:absolute;inset-inline-start:4.5px;top:14px;bottom:0;width:1px;
+  background:linear-gradient(var(--border-hi),transparent);
+}
+.tl-i:last-child::before{display:none;}
+.tl-d{width:10px;height:10px;border-radius:50%;margin-top:5px;background:var(--bg);border:1.5px solid var(--accent);}
+.tl-i.past .tl-d{border-color:var(--text-3);}
+.tl-y{font-family:var(--mono);font-size:11px;color:var(--text-3);letter-spacing:.04em;}
+.tl-t{font-size:13.5px;font-weight:500;margin-top:1px;}
+.tl-s{font-size:12.5px;color:var(--text-3);}
+
+/* ---------- PROJECT CARDS ---------- */
+.proj{cursor:pointer;display:flex;flex-direction:column;justify-content:space-between;gap:18px;min-height:158px;}
+.proj:hover{transform:translateY(-3px);}
+.proj:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+.proj-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
+.badge{
+  font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 8px;border-radius:6px;border:1px solid var(--border);color:var(--text-3);white-space:nowrap;
+}
+.badge.hl{color:var(--warm);border-color:rgba(255,178,122,.3);background:rgba(255,178,122,.07);}
+.badge.ml{color:var(--accent);border-color:rgba(139,156,255,.3);background:rgba(139,156,255,.07);}
+.shot{
+  display:block;width:100%;aspect-ratio:16/9;object-fit:cover;object-position:top center;
+  border-radius:12px;border:1px solid var(--border);margin-top:14px;
+  background:var(--surface);transition:border-color .25s ease, transform .35s cubic-bezier(.22,1,.36,1);
+}
+.proj:hover .shot{border-color:var(--border-hi);}
+.proj.feat .shot{aspect-ratio:1568/744;}
+.m-shot{
+  display:block;width:100%;aspect-ratio:1568/744;object-fit:cover;object-position:top center;
+  border-radius:14px;border:1px solid var(--border);margin:18px 0 4px;
+}
+.proj h3{font-size:17px;font-weight:600;letter-spacing:-.025em;line-height:1.25;}
+.proj.feat h3{font-size:clamp(19px,2.6vw,24px);}
+.proj-d{font-size:13px;color:var(--text-3);margin-top:8px;line-height:1.62;}
+.chips{display:flex;flex-wrap:wrap;gap:5px;}
+.chip{font-size:10.5px;font-family:var(--mono);padding:3px 8px;border-radius:6px;background:var(--surface-hi);color:var(--text-3);border:1px solid var(--border);}
+.metrics{display:flex;gap:20px;flex-wrap:wrap;padding:14px 0;border-block:1px solid var(--border);margin:2px 0;}
+.metrics div{display:flex;flex-direction:column;gap:2px;}
+.m-v{font-family:var(--mono);font-size:19px;font-weight:500;color:var(--accent);letter-spacing:-.02em;}
+.m-l{font-size:10.5px;color:var(--text-3);}
+.more{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-3);transition:.2s;}
+.proj:hover .more{color:var(--accent);gap:9px;}
+.arw{transition:transform .25s;}
+html[dir="rtl"] .arw{transform:scaleX(-1);}
+
+/* ---------- SKILLS ---------- */
+.sk h4{font-size:13.5px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.sk h4 i{
+  width:22px;height:22px;border-radius:7px;display:grid;place-items:center;font-style:normal;
+  font-size:11px;background:var(--surface-hi);border:1px solid var(--border);color:var(--accent);
+}
+.sk p{font-size:12.8px;color:var(--text-3);line-height:1.66;}
+.sk ul{list-style:none;display:flex;flex-direction:column;gap:7px;margin-top:2px;}
+.sk li{font-size:12.5px;color:var(--text-3);display:grid;grid-template-columns:auto 1fr;gap:8px;align-items:start;}
+.sk li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--accent);opacity:.65;margin-top:7px;}
+.bars{display:flex;flex-direction:column;gap:9px;margin-top:2px;}
+.bar-r{display:flex;flex-direction:column;gap:5px;}
+.bar-t{display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);}
+.bar-t span:last-child{color:var(--text-3);font-size:11px;font-family:var(--mono);}
+.bar{height:3px;border-radius:2px;background:var(--surface-hi);overflow:hidden;}
+.bar i{display:block;height:100%;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0;transition:width 1.1s cubic-bezier(.22,1,.36,1);}
+
+/* ---------- CONTACT ---------- */
+.cta-card{display:flex;flex-direction:column;justify-content:space-between;gap:22px;padding:30px;}
+.cta-card h2{font-size:clamp(23px,3.4vw,31px);}
+.cta-card p{font-size:13.8px;color:var(--text-3);margin-top:11px;max-width:38ch;line-height:1.7;}
+.ct{display:flex;flex-direction:column;gap:6px;justify-content:center;min-height:92px;}
+.ct-l{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-3);}
+.ct-v{font-size:14px;color:var(--text);word-break:break-word;transition:color .2s;}
+a.card:hover .ct-v{color:var(--accent);}
+
+footer{
+  margin-top:64px;padding:26px 0 34px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;
+  font-size:12.5px;color:var(--text-3);
+}
+footer a:hover{color:var(--text-2);}
+
+/* ---------- MODAL ---------- */
+.ov{
+  position:fixed;inset:0;z-index:200;display:grid;place-items:center;padding:22px;
+  background:rgba(4,4,6,.74);backdrop-filter:blur(9px);
+  opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s;
+}
+.ov.on{opacity:1;visibility:visible;}
+.modal{
+  width:min(760px,100%);max-height:86vh;overflow-y:auto;border-radius:22px;
+  border:1px solid var(--border-hi);background:var(--bg-soft);padding:34px;position:relative;
+  transform:translateY(18px) scale(.985);transition:transform .35s cubic-bezier(.22,1,.36,1);
+}
+.ov.on .modal{transform:none;}
+.modal::-webkit-scrollbar{width:7px;}
+.modal::-webkit-scrollbar-thumb{background:var(--border-hi);border-radius:4px;}
+.m-close{
+  position:absolute;top:18px;inset-inline-end:18px;z-index:2;width:32px;height:32px;border-radius:9px;
+  border:1px solid var(--border);display:grid;place-items:center;color:var(--text-3);
+  background:var(--bg-soft);transition:.2s;font-size:16px;line-height:1;
+}
+.m-close:hover{color:var(--text);border-color:var(--border-hi);}
+.modal h3{font-size:clamp(21px,3.4vw,28px);font-weight:600;letter-spacing:-.03em;line-height:1.15;margin:10px 0 8px;padding-inline-end:44px;}
+.m-sub{font-size:14px;color:var(--text-2);margin-bottom:18px;}
+.modal .metrics{margin:20px 0;}
+.m-body{font-size:14px;color:var(--text-2);line-height:1.76;}
+.m-body p+p{margin-top:12px;}
+.m-h{font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-3);margin:22px 0 11px;}
+.m-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.m-list li{font-size:13.5px;color:var(--text-2);display:grid;grid-template-columns:auto 1fr;gap:10px;line-height:1.62;}
+.m-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:8px;}
+.m-links{display:flex;gap:9px;flex-wrap:wrap;margin-top:24px;}
+
+/* ---------- REVEAL ---------- */
+.rv{opacity:0;transform:translateY(16px);transition:opacity .65s cubic-bezier(.22,1,.36,1),transform .65s cubic-bezier(.22,1,.36,1);}
+.rv.in{opacity:1;transform:none;}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:900px){
+  .bento{grid-template-columns:repeat(4,1fr);}
+  .c4,.c6{grid-column:span 4;} .c3{grid-column:span 2;} .c2{grid-column:span 2;}
+  .r2{grid-row:span 1;}
+}
+@media(max-width:720px){
+  .nav-links{
+    position:absolute;top:62px;inset-inline:0;flex-direction:column;gap:2px;padding:12px 22px 18px;
+    background:rgba(8,8,10,.97);border-bottom:1px solid var(--border);
+    opacity:0;visibility:hidden;transform:translateY(-8px);transition:.25s;
+  }
+  .nav.open .nav-links{opacity:1;visibility:visible;transform:none;}
+  .nav-links a{padding:10px 12px;font-size:14.5px;}
+  .burger{display:grid;}
+  .bento{grid-template-columns:repeat(2,1fr);gap:11px;}
+  .c4,.c6,.c3{grid-column:span 2;} .c2{grid-column:span 1;}
+  .card{padding:18px;} .hero-intro,.cta-card{padding:22px;}
+  section{padding:56px 0 8px;} #hero{padding-top:88px;}
+  .modal{padding:24px;border-radius:18px;}
+  .metrics{gap:14px;}
+  /* Cibles tactiles : minimum ~40px de haut sur mobile */
+  .lang button{padding:9px 13px;font-size:12px;min-height:36px;}
+  .burger{width:40px;height:40px;}
+  .badge{font-size:11px;}
+  .chip{font-size:11.5px;padding:4px 9px;}
+}
+@media(max-width:420px){
+  .bento{grid-template-columns:1fr;}
+  /* Toutes les classes de span doivent retomber sur 1 colonne :
+     sinon .c4/.c6/.c3 (span 2, hérités du palier 720px) créent une
+     colonne implicite auto-dimensionnée et écrasent les cartes. */
+  .c2,.c3,.c4,.c6{grid-column:span 1;}
+}
+@media(prefers-reduced-motion:reduce){
+  *{animation:none!important;transition-duration:.01ms!important;}
+  .rv{opacity:1;transform:none;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-in">
+    <a href="#hero" class="brand"><span class="dot">A</span><span>M.A. Chamam</span></a>
+    <div class="nav-links" id="navLinks">
+      <a href="#about" data-i18n="nav.about">À propos</a>
+      <a href="#work" data-i18n="nav.work">Projets</a>
+      <a href="#skills" data-i18n="nav.skills">Compétences</a>
+      <a href="#contact" data-i18n="nav.contact">Contact</a>
+    </div>
+    <div class="nav-right">
+      <div class="lang" id="lang">
+        <button data-lang="fr">FR</button>
+        <button data-lang="en" class="on">EN</button>
+        <button data-lang="ar">ع</button>
+      </div>
+      <button class="burger" id="burger" aria-label="Menu"><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section id="hero">
+  <div class="bento">
+    <div class="card hero-intro c4 r2 rv">
+      <div>
+        <span class="pill"><span class="pulse"></span><span data-i18n="hero.pill">Disponible en freelance · Tunis</span></span>
+        <h1 style="margin-top:20px">Mohamed Amine<br><span class="grad">Chamam</span></h1>
+        <p class="hero-role" data-i18n="hero.role">Ingénieur logiciel — développement front-end, machine learning et cybersécurité.</p>
+        <p class="hero-bio" data-i18n="hero.bio">Je construis des pipelines ML reproductibles, des systèmes de détection d'anomalies et des sites web soignés de bout en bout. De l'analyse de données à l'interface finale, en passant par l'identité de marque.</p>
+      </div>
+      <div class="btns">
+        <a href="#contact" class="btn btn-p" data-i18n="hero.cta1">Me contacter</a>
+        <a href="#work" class="btn btn-s" data-i18n="hero.cta2">Voir les projets</a>
+        <a href="https://github.com/Aminechamam" target="_blank" rel="noopener" class="btn btn-s">GitHub <span class="arw">↗</span></a>
+      </div>
+    </div>
+
+    <div class="card card-avail c2 rv">
+      <div class="avail-row"><span data-i18n="hero.a1">Statut</span><b data-i18n="hero.a1v">Ouvert aux missions</b></div>
+      <div class="avail-row"><span data-i18n="hero.a2">Localisation</span><b>Tunis, TN · GMT+1</b></div>
+      <div class="avail-row"><span data-i18n="hero.a3">Formation</span><b data-i18n="hero.a3v">MedTech · 2021–2026</b></div>
+      <div class="avail-row"><span data-i18n="hero.a4">Domaines</span><b data-i18n="hero.a4v">ML · Cyber · Web</b></div>
+    </div>
+
+    <div class="card stat c2 rv">
+      <div class="stat-v a" data-count="0.9277">0.9277</div>
+      <div class="stat-l" data-i18n="hero.s1">Meilleur AUC-ROC du benchmark OCC-NIDS</div>
+    </div>
+
+    <div class="card stat c2 rv">
+      <div class="stat-v b" data-i18n="hero.s2v">Outstanding</div>
+      <div class="stat-l" data-i18n="hero.s2">Mention obtenue au capstone, MedTech 2026</div>
+    </div>
+
+    <div class="card stat c2 rv">
+      <div class="stat-v c">IEEE</div>
+      <div class="stat-l" data-i18n="hero.s3">Article co-écrit, actuellement en review</div>
+    </div>
+
+    <div class="card stat c2 rv">
+      <div class="stat-v" data-count="5">5</div>
+      <div class="stat-l" data-i18n="hero.s4">Langues parlées — tunisien, français, anglais, arabe littéraire, italien</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="sec-head rv">
+    <div>
+      <div class="eyebrow" data-i18n="about.eyebrow">Profil</div>
+      <h2 data-i18n="about.h">Qui je suis</h2>
+    </div>
+    <p class="sec-note" data-i18n="about.note">Un profil hybride : rigueur de la recherche appliquée, exécution d'un développeur produit.</p>
+  </div>
+  <div class="bento">
+    <div class="card about-txt c4 rv">
+      <p data-i18n="about.p1">Diplômé en ingénierie logicielle à MedTech (South Mediterranean University, Tunis), je me suis spécialisé dans le machine learning appliqué — forecasting de séries temporelles et sécurité réseau. Mon projet de fin d'études, défendu avec la mention Outstanding, a donné lieu à un article scientifique aujourd'hui en review pour une conférence IEEE.</p>
+      <p data-i18n="about.p2">Mais je ne me limite pas au modèle. Je conçois et développe des sites web complets — architecture, interface, animation, contenu — et je pilote un projet créatif indépendant de bout en bout : identité visuelle, production musicale, distribution et licensing.</p>
+      <p data-i18n="about.p3">C'est cette polyvalence que je mets au service de mes clients : je peux prendre un besoin flou, le structurer en problème technique, le résoudre, puis le présenter dans une interface que les gens ont envie d'utiliser.</p>
+    </div>
+    <div class="card c2 rv">
+      <div class="tl">
+        <div class="tl-i"><span class="tl-d"></span><div>
+          <div class="tl-y">2026</div>
+          <div class="tl-t" data-i18n="tl.0t">Sourire — assistant IA</div>
+          <div class="tl-s" data-i18n="tl.0s">Widget de chat de prise de rendez-vous</div>
+        </div></div>
+        <div class="tl-i"><span class="tl-d"></span><div>
+          <div class="tl-y">2026</div>
+          <div class="tl-t" data-i18n="tl.1t">Capstone — Outstanding</div>
+          <div class="tl-s" data-i18n="tl.1s">Benchmark OCC-NIDS · article IEEE en review</div>
+        </div></div>
+        <div class="tl-i past"><span class="tl-d"></span><div>
+          <div class="tl-y">2025</div>
+          <div class="tl-t" data-i18n="tl.2t">AWS Academy Graduate</div>
+          <div class="tl-s" data-i18n="tl.2s">Cloud Web Application Builder</div>
+        </div></div>
+        <div class="tl-i past"><span class="tl-d"></span><div>
+          <div class="tl-y">2024</div>
+          <div class="tl-t" data-i18n="tl.3t">XHAMSIN</div>
+          <div class="tl-s" data-i18n="tl.3s">Lancement du projet musical et de son site</div>
+        </div></div>
+        <div class="tl-i past"><span class="tl-d"></span><div>
+          <div class="tl-y">2023</div>
+          <div class="tl-t" data-i18n="tl.4t">Stage ML — Be Wireless Solutions</div>
+          <div class="tl-s" data-i18n="tl.4s">Prévision de consommation d'eau</div>
+        </div></div>
+        <div class="tl-i past"><span class="tl-d"></span><div>
+          <div class="tl-y">2021</div>
+          <div class="tl-t" data-i18n="tl.5t">Entrée à MedTech</div>
+          <div class="tl-s" data-i18n="tl.5s">Ingénierie logicielle, cursus en anglais</div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WORK ================= -->
+<section id="work">
+  <div class="sec-head rv">
+    <div>
+      <div class="eyebrow" data-i18n="work.eyebrow">Réalisations</div>
+      <h2 data-i18n="work.h">Projets sélectionnés</h2>
+    </div>
+    <p class="sec-note" data-i18n="work.note">Cliquez sur un projet pour ouvrir le détail complet.</p>
+  </div>
+  <div class="bento">
+
+    <div class="card proj feat c3 r2 rv" data-proj="sourire" tabindex="0" role="button">
+      <div>
+        <div class="proj-top">
+          <span class="badge" data-i18n="work.tag.ai">Web · Assistant IA</span>
+          <span class="badge hl" data-i18n="work.tag.live">Site en ligne</span>
+        </div>
+        <h3 style="margin-top:16px" data-i18n="p.sourire.t">Sourire — assistant de prise de rendez-vous</h3>
+        <p class="proj-d" data-i18n="p.sourire.d">Widget de chat embarquable qui répond aux questions des patients et réserve un créneau, posé sur un site de clinique dentaire conçu comme vitrine de démonstration.</p>
+        <img class="shot" src="assets/sourire.jpg" width="1568" height="744" loading="lazy" decoding="async"
+             alt="Sourire dental clinic site — clean teal and white layout with a booking hero and today's availability panel">
+      </div>
+      <div>
+        <div class="chips" style="margin-bottom:14px"><span class="chip">HTML/CSS/JS</span><span class="chip">Chat widget</span><span class="chip">Conversational UX</span><span class="chip">Responsive</span></div>
+        <span class="more"><span data-i18n="work.open">Lire l'étude de cas</span><span class="arw">→</span></span>
+      </div>
+    </div>
+
+    <div class="card proj feat c3 r2 rv" data-proj="xhamsin" tabindex="0" role="button">
+      <div>
+        <div class="proj-top">
+          <span class="badge" data-i18n="work.tag.creative">Créatif · Marque</span>
+          <span class="badge hl" data-i18n="work.tag.live">Site en ligne</span>
+        </div>
+        <h3 style="margin-top:16px">XHAMSIN</h3>
+        <p class="proj-d" data-i18n="p.xhamsin.d">Projet musical indépendant (ambient / lofi / fusion maghrébine) et son site de marque, conçus et développés de zéro.</p>
+        <img class="shot" src="assets/xhamsin.jpg" width="1568" height="744" loading="lazy" decoding="async"
+             alt="XHAMSIN brand site — serif wordmark over a hand-drawn dune and waveform illustration">
+      </div>
+      <div>
+        <div class="chips" style="margin-bottom:14px"><span class="chip">HTML/CSS/JS</span><span class="chip">Brand identity</span><span class="chip">Audio player</span><span class="chip">Responsive</span></div>
+        <span class="more"><span data-i18n="work.open">Lire l'étude de cas</span><span class="arw">→</span></span>
+      </div>
+    </div>
+
+    <div class="card proj c3 rv" data-proj="nids" tabindex="0" role="button">
+      <div>
+        <div class="proj-top">
+          <span class="badge ml" data-i18n="work.tag.research">Recherche · ML</span>
+          <span class="badge hl">Outstanding</span>
+        </div>
+        <h3 style="margin-top:14px" data-i18n="p.nids.t">OCC-NIDS Benchmark</h3>
+        <p class="proj-d" data-i18n="p.nids.d">Benchmark contrôlé et sans fuite de données de six détecteurs d'anomalies one-class sur UNSW-NB15 et CIC-IDS-2018. Deux modèles (Autoencoder, Deep SVDD) implémentés from scratch en NumPy/PyTorch.</p>
+      </div>
+      <div class="metrics">
+        <div><span class="m-v">0.9277</span><span class="m-l" data-i18n="p.nids.m1">Meilleur AUC-ROC</span></div>
+        <div><span class="m-v">7 → 2</span><span class="m-l" data-i18n="p.nids.m2">Plus grand saut de rang</span></div>
+        <div><span class="m-v">−17.4</span><span class="m-l" data-i18n="p.nids.m3">Points perdus par l'ensemble naïf</span></div>
+      </div>
+      <span class="more"><span data-i18n="work.open">Lire l'étude de cas</span><span class="arw">→</span></span>
+    </div>
+
+    <div class="card proj c3 rv" data-proj="site" tabindex="0" role="button">
+      <div>
+        <div class="proj-top"><span class="badge" data-i18n="work.tag.web">Web · Front-end</span></div>
+        <h3 style="margin-top:14px" data-i18n="p.site.t">Site du benchmark OCC-NIDS</h3>
+        <p class="proj-d" data-i18n="p.site.d">Data storytelling scientifique : mise en page de résultats, animations au scroll, structure éditoriale — entièrement codé à la main.</p>
+      </div>
+      <span class="more"><span data-i18n="work.open">Lire l'étude de cas</span><span class="arw">→</span></span>
+    </div>
+
+    <div class="card proj c3 rv" data-proj="water" tabindex="0" role="button">
+      <div>
+        <div class="proj-top"><span class="badge ml" data-i18n="work.tag.intern">Stage · 2023</span></div>
+        <h3 style="margin-top:14px" data-i18n="p.water.t">Prévision de consommation d'eau</h3>
+        <p class="proj-d" data-i18n="p.water.d">Modèles de séries temporelles pour anticiper la consommation client chez Be Wireless Solutions. ARIMA/SARIMA vs LSTM.</p>
+      </div>
+      <span class="more"><span data-i18n="work.open">Lire l'étude de cas</span><span class="arw">→</span></span>
+    </div>
+
+    <div class="card proj c3 rv" data-proj="pptx" tabindex="0" role="button">
+      <div>
+        <div class="proj-top"><span class="badge" data-i18n="work.tag.tool">Outil · Node.js</span></div>
+        <h3 style="margin-top:14px" data-i18n="p.pptx.t">Générateur de présentations</h3>
+        <p class="proj-d" data-i18n="p.pptx.d">Génération automatisée de decks avec pptxgenjs — outillage web appliqué à des besoins concrets de production de contenu.</p>
+      </div>
+      <span class="more"><span data-i18n="work.open">Lire l'étude de cas</span><span class="arw">→</span></span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills">
+  <div class="sec-head rv">
+    <div>
+      <div class="eyebrow" data-i18n="skills.eyebrow">Capacités</div>
+      <h2 data-i18n="skills.h">Stack & compétences</h2>
+    </div>
+    <p class="sec-note" data-i18n="skills.note">Les outils que j'utilise réellement en production, pas une liste de mots-clés.</p>
+  </div>
+  <div class="bento">
+    <div class="card sk c3 rv">
+      <h4><i>◆</i><span data-i18n="sk.1h">Machine Learning</span></h4>
+      <p data-i18n="sk.1p">PyTorch, NumPy, scikit-learn, pandas. Détection d'anomalies, classification one-class, évaluation rigoureuse de modèles, calibration de seuils (Youden's J), reproductibilité et protocoles sans fuite de données.</p>
+    </div>
+    <div class="card sk c3 rv">
+      <h4><i>▨</i><span data-i18n="sk.2h">Data Engineering</span></h4>
+      <p data-i18n="sk.2p">Préprocessing de larges jeux de données, cache Parquet, acquisition via AWS CLI, pipelines d'évaluation reproductibles et pistes d'audit propres.</p>
+    </div>
+    <div class="card sk c2 rv">
+      <h4><i>◈</i><span data-i18n="sk.3h">Logiciel & Web</span></h4>
+      <p data-i18n="sk.3p">Python, JavaScript (Node.js, front-end), HTML/CSS, Git, LaTeX, environnements Linux et Windows.</p>
+    </div>
+    <div class="card sk c2 rv">
+      <h4><i>◐</i><span data-i18n="sk.4h">Langues</span></h4>
+      <div class="bars">
+        <div class="bar-r"><div class="bar-t"><span data-i18n="sk.lang.en">Anglais</span><span data-i18n="sk.lvl.fluent">courant</span></div><div class="bar"><i data-w="100"></i></div></div>
+        <div class="bar-r"><div class="bar-t"><span data-i18n="sk.lang.fr">Français</span><span data-i18n="sk.lvl.fluent">courant</span></div><div class="bar"><i data-w="100"></i></div></div>
+        <div class="bar-r"><div class="bar-t"><span data-i18n="sk.lang.tn">Tunisien</span><span data-i18n="sk.lvl.native">natif</span></div><div class="bar"><i data-w="92"></i></div></div>
+        <div class="bar-r"><div class="bar-t"><span data-i18n="sk.lang.it">Italien</span><span data-i18n="sk.lvl.basic">notions</span></div><div class="bar"><i data-w="25"></i></div></div>
+        <div class="bar-r"><div class="bar-t"><span data-i18n="sk.lang.ar">Arabe</span><span data-i18n="sk.lvl.basic">notions</span></div><div class="bar"><i data-w="25"></i></div></div>
+      </div>
+    </div>
+    <div class="card sk c2 rv">
+      <h4><i>✦</i><span data-i18n="sk.5h">Certifications</span></h4>
+      <ul>
+        <li data-i18n="sk.c1">AWS Academy Graduate — Cloud Web Application Builder (2025)</li>
+        <li data-i18n="sk.c2">Dynamic Programming & Greedy Algorithms — CU Boulder</li>
+        <li data-i18n="sk.c3">React Basics & React Native — Meta</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="bento">
+    <div class="card cta-card c4 r2 rv">
+      <div>
+        <div class="eyebrow" data-i18n="ct.eyebrow">Contact</div>
+        <h2 data-i18n="ct.h">Travaillons ensemble</h2>
+        <p data-i18n="ct.p">Disponible pour des missions freelance en machine learning, analyse de données, cybersécurité et développement web. Décrivez-moi votre besoin — je réponds sous 24 h.</p>
+      </div>
+      <div class="btns">
+        <a href="mailto:mohamed.amine.chamam@gmail.com" class="btn btn-p" data-i18n="ct.btn">Envoyer un email</a>
+        <a href="https://github.com/Aminechamam" target="_blank" rel="noopener" class="btn btn-s">GitHub <span class="arw">↗</span></a>
+      </div>
+    </div>
+    <a href="mailto:mohamed.amine.chamam@gmail.com" class="card ct c2 rv">
+      <span class="ct-l">Email</span><span class="ct-v">mohamed.amine.chamam@gmail.com</span>
+    </a>
+    <a href="tel:+21657099156" class="card ct c2 rv">
+      <span class="ct-l" data-i18n="ct.phone">Téléphone</span><span class="ct-v">+216 57 099 156</span>
+    </a>
+    <a href="https://github.com/Aminechamam" target="_blank" rel="noopener" class="card ct c3 rv">
+      <span class="ct-l">GitHub</span><span class="ct-v">github.com/Aminechamam <span class="arw">↗</span></span>
+    </a>
+    <div class="card ct c3 rv">
+      <span class="ct-l" data-i18n="ct.loc">Localisation</span><span class="ct-v" data-i18n="ct.locv">Tunis, Tunisie — missions à distance dans le monde entier</span>
+    </div>
+  </div>
+
+  <footer>
+    <span>© 2026 Mohamed Amine Chamam</span>
+    <span data-i18n="footer.made">Conçu et codé à la main</span>
+  </footer>
+</section>
+
+</main>
+
+<div class="ov" id="ov">
+  <div class="modal" id="modal" role="dialog" aria-modal="true"></div>
+</div>
+
+<script>
+/* ===================== i18n ===================== */
+const I18N = {
+  fr:{
+    "nav.about":"À propos","nav.work":"Projets","nav.skills":"Compétences","nav.contact":"Contact",
+    "hero.pill":"Disponible en freelance · Tunis",
+    "hero.role":"Ingénieur logiciel — développement front-end, machine learning et cybersécurité.",
+    "hero.bio":"Je construis des pipelines ML reproductibles, des systèmes de détection d'anomalies et des sites web soignés de bout en bout. De l'analyse de données à l'interface finale, en passant par l'identité de marque.",
+    "hero.cta1":"Me contacter","hero.cta2":"Voir les projets",
+    "hero.a1":"Statut","hero.a1v":"Ouvert aux missions","hero.a2":"Localisation","hero.a3":"Formation",
+    "hero.a3v":"MedTech · 2021–2026","hero.a4":"Domaines","hero.a4v":"ML · Cyber · Web",
+    "hero.s1":"Meilleur AUC-ROC du benchmark OCC-NIDS","hero.s2v":"Outstanding",
+    "hero.s2":"Mention obtenue au capstone, MedTech 2026",
+    "hero.s3":"Article co-écrit, actuellement en review",
+    "hero.s4":"Langues parlées — tunisien, français, anglais, arabe littéraire, italien",
+    "about.eyebrow":"Profil","about.h":"Qui je suis",
+    "about.note":"Un profil hybride : rigueur de la recherche appliquée, exécution d'un développeur produit.",
+    "about.p1":"Diplômé en ingénierie logicielle à MedTech (South Mediterranean University, Tunis), je me suis spécialisé dans le machine learning appliqué — forecasting de séries temporelles et sécurité réseau. Mon projet de fin d'études, défendu avec la mention Outstanding, a donné lieu à un article scientifique aujourd'hui en review pour une conférence IEEE.",
+    "about.p2":"Mais je ne me limite pas au modèle. Je conçois et développe des sites web complets — architecture, interface, animation, contenu — et je pilote un projet créatif indépendant de bout en bout : identité visuelle, production musicale, distribution et licensing.",
+    "about.p3":"C'est cette polyvalence que je mets au service de mes clients : je peux prendre un besoin flou, le structurer en problème technique, le résoudre, puis le présenter dans une interface que les gens ont envie d'utiliser.",
+    "tl.0t":"Sourire — assistant IA","tl.0s":"Widget de chat de prise de rendez-vous",
+    "tl.1t":"Capstone — Outstanding","tl.1s":"Benchmark OCC-NIDS · article IEEE en review",
+    "tl.2t":"AWS Academy Graduate","tl.2s":"Cloud Web Application Builder",
+    "tl.3t":"XHAMSIN","tl.3s":"Lancement du projet musical et de son site",
+    "tl.4t":"Stage ML — Be Wireless Solutions","tl.4s":"Prévision de consommation d'eau",
+    "tl.5t":"Entrée à MedTech","tl.5s":"Ingénierie logicielle, cursus en anglais",
+    "work.eyebrow":"Réalisations","work.h":"Projets sélectionnés",
+    "work.note":"Cliquez sur un projet pour ouvrir le détail complet.",
+    "work.open":"Lire l'étude de cas",
+    "work.tag.research":"Recherche · ML","work.tag.intern":"Stage · 2023",
+    "work.tag.creative":"Créatif · Marque","work.tag.web":"Web · Front-end","work.tag.tool":"Outil · Node.js",
+    "work.tag.live":"Site en ligne","work.tag.ai":"Web · Assistant IA",
+    "p.sourire.t":"Sourire — assistant de prise de rendez-vous",
+    "p.sourire.d":"Widget de chat embarquable qui répond aux questions des patients et réserve un créneau, posé sur un site de clinique dentaire conçu comme vitrine de démonstration.",
+    "p.nids.t":"OCC-NIDS Benchmark",
+    "p.nids.d":"Benchmark contrôlé et sans fuite de données de six détecteurs d'anomalies one-class sur UNSW-NB15 et CIC-IDS-2018. Deux modèles (Autoencoder, Deep SVDD) implémentés from scratch en NumPy/PyTorch.",
+    "p.nids.m1":"Meilleur AUC-ROC","p.nids.m2":"Plus grand saut de rang","p.nids.m3":"Points perdus par l'ensemble naïf",
+    "p.water.t":"Prévision de consommation d'eau",
+    "p.water.d":"Modèles de séries temporelles pour anticiper la consommation client chez Be Wireless Solutions. ARIMA/SARIMA vs LSTM.",
+    "p.xhamsin.d":"Projet musical indépendant (ambient / lofi / fusion maghrébine) et son site de marque, conçus et développés de zéro.",
+    "p.site.t":"Site du benchmark OCC-NIDS",
+    "p.site.d":"Data storytelling scientifique : mise en page de résultats, animations au scroll, structure éditoriale — entièrement codé à la main.",
+    "p.pptx.t":"Générateur de présentations",
+    "p.pptx.d":"Génération automatisée de decks avec pptxgenjs — outillage web appliqué à des besoins concrets de production de contenu.",
+    "skills.eyebrow":"Capacités","skills.h":"Stack & compétences",
+    "skills.note":"Les outils que j'utilise réellement en production, pas une liste de mots-clés.",
+    "sk.1h":"Machine Learning",
+    "sk.1p":"PyTorch, NumPy, scikit-learn, pandas. Détection d'anomalies, classification one-class, évaluation rigoureuse de modèles, calibration de seuils (Youden's J), reproductibilité et protocoles sans fuite de données.",
+    "sk.2h":"Data Engineering",
+    "sk.2p":"Préprocessing de larges jeux de données, cache Parquet, acquisition via AWS CLI, pipelines d'évaluation reproductibles et pistes d'audit propres.",
+    "sk.3h":"Logiciel & Web",
+    "sk.3p":"Python, JavaScript (Node.js, front-end), HTML/CSS, Git, LaTeX, environnements Linux et Windows.",
+    "sk.4h":"Langues","sk.lang.tn":"Tunisien","sk.lang.ar":"Arabe","sk.lang.fr":"Français","sk.lang.en":"Anglais","sk.lang.it":"Italien",
+    "sk.lvl.native":"natif","sk.lvl.fluent":"courant","sk.lvl.conv":"conversationnel","sk.lvl.basic":"notions",
+    "sk.5h":"Certifications",
+    "sk.c1":"AWS Academy Graduate — Cloud Web Application Builder (2025)",
+    "sk.c2":"Dynamic Programming & Greedy Algorithms — CU Boulder",
+    "sk.c3":"React Basics & React Native — Meta",
+    "ct.eyebrow":"Contact","ct.h":"Travaillons ensemble",
+    "ct.p":"Disponible pour des missions freelance en machine learning, analyse de données, cybersécurité et développement web. Décrivez-moi votre besoin — je réponds sous 24 h.",
+    "ct.btn":"Envoyer un email","ct.phone":"Téléphone","ct.loc":"Localisation",
+    "ct.locv":"Tunis, Tunisie — missions à distance dans le monde entier",
+    "footer.made":"Conçu et codé à la main",
+    "m.close":"Fermer","m.context":"Contexte","m.what":"Ce que j'ai fait","m.result":"Résultats"
+  },
+  en:{
+    "nav.about":"About","nav.work":"Work","nav.skills":"Skills","nav.contact":"Contact",
+    "hero.pill":"Available for freelance · Tunis",
+    "hero.role":"Software engineer — front-end development, machine learning and cybersecurity.",
+    "hero.bio":"I build reproducible ML pipelines, anomaly detection systems and polished websites end to end. From data analysis to the final interface, brand identity included.",
+    "hero.cta1":"Get in touch","hero.cta2":"See the work",
+    "hero.a1":"Status","hero.a1v":"Open to projects","hero.a2":"Location","hero.a3":"Education",
+    "hero.a3v":"MedTech · 2021–2026","hero.a4":"Focus","hero.a4v":"ML · Cyber · Web",
+    "hero.s1":"Best AUC-ROC in the OCC-NIDS benchmark","hero.s2v":"Outstanding",
+    "hero.s2":"Grade awarded on the capstone, MedTech 2026",
+    "hero.s3":"Co-authored paper, currently under review",
+    "hero.s4":"Languages spoken — Tunisian, French, English, Modern Standard Arabic, Italian",
+    "about.eyebrow":"Profile","about.h":"Who I am",
+    "about.note":"A hybrid profile: the rigour of applied research, the execution of a product developer.",
+    "about.p1":"I hold a software engineering degree from MedTech (South Mediterranean University, Tunis), where I specialised in applied machine learning — time-series forecasting and network security. My capstone project, defended with an Outstanding grade, led to a scientific paper currently under review for an IEEE conference.",
+    "about.p2":"But I don't stop at the model. I design and build complete websites — architecture, interface, motion, content — and I run an independent creative project end to end: visual identity, music production, distribution and licensing.",
+    "about.p3":"That range is what I bring to clients: I can take a vague need, frame it as a technical problem, solve it, then present it in an interface people actually want to use.",
+    "tl.0t":"Sourire — AI assistant","tl.0s":"Appointment-booking chat widget",
+    "tl.1t":"Capstone — Outstanding","tl.1s":"OCC-NIDS benchmark · IEEE paper under review",
+    "tl.2t":"AWS Academy Graduate","tl.2s":"Cloud Web Application Builder",
+    "tl.3t":"XHAMSIN","tl.3s":"Launched the music project and its website",
+    "tl.4t":"ML Internship — Be Wireless Solutions","tl.4s":"Water consumption forecasting",
+    "tl.5t":"Started at MedTech","tl.5s":"Software engineering, taught in English",
+    "work.eyebrow":"Selected work","work.h":"Projects",
+    "work.note":"Click any project to open the full case study.",
+    "work.open":"Read the case study",
+    "work.tag.research":"Research · ML","work.tag.intern":"Internship · 2023",
+    "work.tag.creative":"Creative · Brand","work.tag.web":"Web · Front-end","work.tag.tool":"Tool · Node.js",
+    "work.tag.live":"Live site","work.tag.ai":"Web · AI assistant",
+    "p.sourire.t":"Sourire — appointment booking assistant",
+    "p.sourire.d":"An embeddable chat widget that answers patient questions and books a slot, shown on a dental clinic site built as a demo showcase.",
+    "p.nids.t":"OCC-NIDS Benchmark",
+    "p.nids.d":"A controlled, leakage-free benchmark of six one-class anomaly detectors on UNSW-NB15 and CIC-IDS-2018. Two models (Autoencoder, Deep SVDD) implemented from scratch in NumPy/PyTorch.",
+    "p.nids.m1":"Best AUC-ROC","p.nids.m2":"Largest rank shift","p.nids.m3":"Points lost by the naive ensemble",
+    "p.water.t":"Water consumption forecasting",
+    "p.water.d":"Time-series models to anticipate customer consumption at Be Wireless Solutions. ARIMA/SARIMA vs LSTM.",
+    "p.xhamsin.d":"An independent music project (ambient / lofi / Maghreb fusion) and its brand site, designed and built from scratch.",
+    "p.site.t":"OCC-NIDS benchmark website",
+    "p.site.d":"Scientific data storytelling: results layout, scroll animations, editorial structure — hand-coded throughout.",
+    "p.pptx.t":"Presentation generator",
+    "p.pptx.d":"Automated deck generation with pptxgenjs — web tooling applied to real content production needs.",
+    "skills.eyebrow":"Capabilities","skills.h":"Stack & skills",
+    "skills.note":"The tools I actually ship with, not a keyword list.",
+    "sk.1h":"Machine Learning",
+    "sk.1p":"PyTorch, NumPy, scikit-learn, pandas. Anomaly detection, one-class classification, rigorous model evaluation, threshold calibration (Youden's J), reproducibility and leakage-free protocols.",
+    "sk.2h":"Data Engineering",
+    "sk.2p":"Preprocessing of large datasets, Parquet caching, data acquisition via AWS CLI, reproducible evaluation pipelines and clean audit trails.",
+    "sk.3h":"Software & Web",
+    "sk.3p":"Python, JavaScript (Node.js, front-end), HTML/CSS, Git, LaTeX, Linux and Windows environments.",
+    "sk.4h":"Languages","sk.lang.tn":"Tunisian","sk.lang.ar":"Arabic","sk.lang.fr":"French","sk.lang.en":"English","sk.lang.it":"Italian",
+    "sk.lvl.native":"native","sk.lvl.fluent":"fluent","sk.lvl.conv":"conversational","sk.lvl.basic":"basic",
+    "sk.5h":"Certifications",
+    "sk.c1":"AWS Academy Graduate — Cloud Web Application Builder (2025)",
+    "sk.c2":"Dynamic Programming & Greedy Algorithms — CU Boulder",
+    "sk.c3":"React Basics & React Native — Meta",
+    "ct.eyebrow":"Contact","ct.h":"Let's work together",
+    "ct.p":"Available for freelance work in machine learning, data analysis, cybersecurity and web development. Tell me what you need — I reply within 24 hours.",
+    "ct.btn":"Send an email","ct.phone":"Phone","ct.loc":"Location",
+    "ct.locv":"Tunis, Tunisia — remote work worldwide",
+    "footer.made":"Designed and hand-coded",
+    "m.close":"Close","m.context":"Context","m.what":"What I did","m.result":"Results"
+  },
+  ar:{
+    "nav.about":"نبذة","nav.work":"الأعمال","nav.skills":"المهارات","nav.contact":"تواصل",
+    "hero.pill":"متاح للعمل الحر · تونس",
+    "hero.role":"مهندس برمجيات — تطوير واجهات، تعلّم آلي، وأمن سيبراني.",
+    "hero.bio":"أبني أنظمة تعلّم آلي قابلة للتكرار، وأنظمة كشف الشذوذ، ومواقع ويب متقنة من البداية إلى النهاية: من تحليل البيانات إلى الواجهة النهائية، مروراً بالهوية البصرية.",
+    "hero.cta1":"تواصل معي","hero.cta2":"استعرض الأعمال",
+    "hero.a1":"الحالة","hero.a1v":"متاح لمشاريع جديدة","hero.a2":"الموقع","hero.a3":"الدراسة",
+    "hero.a3v":"MedTech · 2021–2026","hero.a4":"المجالات","hero.a4v":"تعلّم آلي · أمن · ويب",
+    "hero.s1":"أفضل نتيجة AUC-ROC في اختبار OCC-NIDS","hero.s2v":"امتياز",
+    "hero.s2":"التقدير المتحصّل عليه في مشروع التخرج، MedTech 2026",
+    "hero.s3":"بحث علمي مشترك قيد المراجعة حالياً",
+    "hero.s4":"لغات أتحدثها — التونسية، الفرنسية، الإنجليزية، العربية الفصحى، الإيطالية",
+    "about.eyebrow":"نبذة","about.h":"من أنا",
+    "about.note":"ملف هجين: دقّة البحث التطبيقي، وسرعة تنفيذ مطوّر المنتجات.",
+    "about.p1":"خرّيج هندسة برمجيات من MedTech (جامعة جنوب المتوسط، تونس)، تخصّصت في التعلّم الآلي التطبيقي — التنبؤ بالسلاسل الزمنية وأمن الشبكات. مشروع تخرّجي، الذي نوقش بتقدير امتياز، أثمر بحثاً علمياً قيد المراجعة حالياً لمؤتمر IEEE.",
+    "about.p2":"لكنني لا أتوقف عند النموذج. أصمّم وأطوّر مواقع ويب كاملة — البنية، الواجهة، الحركة، المحتوى — وأدير مشروعاً إبداعياً مستقلاً من الألف إلى الياء: الهوية البصرية، الإنتاج الموسيقي، التوزيع والترخيص.",
+    "about.p3":"هذا التنوّع هو ما أقدّمه لعملائي: أستطيع أخذ حاجة غير واضحة، وصياغتها كمشكلة تقنية، وحلّها، ثم تقديمها في واجهة يرغب الناس فعلاً في استخدامها.",
+    "tl.0t":"Sourire — مساعد ذكي","tl.0s":"أداة محادثة لحجز المواعيد",
+    "tl.1t":"مشروع التخرج — امتياز","tl.1s":"اختبار OCC-NIDS · بحث IEEE قيد المراجعة",
+    "tl.2t":"AWS Academy Graduate","tl.2s":"Cloud Web Application Builder",
+    "tl.3t":"XHAMSIN","tl.3s":"إطلاق المشروع الموسيقي وموقعه",
+    "tl.4t":"تدريب تعلّم آلي — Be Wireless Solutions","tl.4s":"التنبؤ باستهلاك المياه",
+    "tl.5t":"الالتحاق بـ MedTech","tl.5s":"هندسة برمجيات، دراسة باللغة الإنجليزية",
+    "work.eyebrow":"الأعمال","work.h":"مشاريع مختارة",
+    "work.note":"اضغط على أي مشروع لعرض التفاصيل الكاملة.",
+    "work.open":"اقرأ دراسة الحالة",
+    "work.tag.research":"بحث · تعلّم آلي","work.tag.intern":"تدريب · 2023",
+    "work.tag.creative":"إبداعي · علامة","work.tag.web":"ويب · واجهات","work.tag.tool":"أداة · Node.js",
+    "work.tag.live":"موقع منشور","work.tag.ai":"ويب · مساعد ذكي",
+    "p.sourire.t":"Sourire — مساعد حجز المواعيد",
+    "p.sourire.d":"أداة محادثة قابلة للدمج تجيب عن أسئلة المرضى وتحجز موعداً، معروضة على موقع عيادة أسنان صُمّم كنموذج توضيحي.",
+    "p.nids.t":"اختبار OCC-NIDS المرجعي",
+    "p.nids.d":"اختبار مرجعي منضبط وخالٍ من تسرّب البيانات لستة كواشف شذوذ أحادية الفئة على UNSW-NB15 و CIC-IDS-2018. نموذجان (Autoencoder و Deep SVDD) مبرمجان من الصفر بـ NumPy/PyTorch.",
+    "p.nids.m1":"أفضل AUC-ROC","p.nids.m2":"أكبر تغيّر في الترتيب","p.nids.m3":"نقاط خسرها التجميع البسيط",
+    "p.water.t":"التنبؤ باستهلاك المياه",
+    "p.water.d":"نماذج سلاسل زمنية لتوقّع استهلاك العملاء لدى Be Wireless Solutions. مقارنة ARIMA/SARIMA بـ LSTM.",
+    "p.xhamsin.d":"مشروع موسيقي مستقل (أمبيانت / لوفاي / مزيج مغاربي) وموقع علامته، مصمّم ومطوّر من الصفر.",
+    "p.site.t":"موقع اختبار OCC-NIDS",
+    "p.site.d":"سرد بصري للبيانات العلمية: عرض النتائج، حركات عند التمرير، بنية تحريرية — مكتوب يدوياً بالكامل.",
+    "p.pptx.t":"مولّد العروض التقديمية",
+    "p.pptx.d":"توليد آلي للعروض عبر pptxgenjs — أدوات ويب موجّهة لاحتياجات إنتاج محتوى حقيقية.",
+    "skills.eyebrow":"القدرات","skills.h":"الأدوات والمهارات",
+    "skills.note":"الأدوات التي أستخدمها فعلياً في الإنتاج، لا قائمة كلمات مفتاحية.",
+    "sk.1h":"التعلّم الآلي",
+    "sk.1p":"PyTorch وNumPy وscikit-learn وpandas. كشف الشذوذ، التصنيف أحادي الفئة، تقييم صارم للنماذج، معايرة العتبات (Youden's J)، قابلية التكرار وبروتوكولات خالية من تسرّب البيانات.",
+    "sk.2h":"هندسة البيانات",
+    "sk.2p":"معالجة مجموعات بيانات ضخمة، تخزين مؤقت بصيغة Parquet، جلب البيانات عبر AWS CLI، ومسارات تقييم قابلة للتكرار مع سجلّ تدقيق واضح.",
+    "sk.3h":"البرمجيات والويب",
+    "sk.3p":"Python وJavaScript (Node.js وواجهات أمامية) وHTML/CSS وGit وLaTeX، وبيئتا Linux وWindows.",
+    "sk.4h":"اللغات","sk.lang.tn":"التونسية","sk.lang.ar":"العربية","sk.lang.fr":"الفرنسية","sk.lang.en":"الإنجليزية","sk.lang.it":"الإيطالية",
+    "sk.lvl.native":"لغة أم","sk.lvl.fluent":"بطلاقة","sk.lvl.conv":"مستوى محادثة","sk.lvl.basic":"مبادئ",
+    "sk.5h":"الشهادات",
+    "sk.c1":"AWS Academy Graduate — Cloud Web Application Builder (2025)",
+    "sk.c2":"Dynamic Programming & Greedy Algorithms — CU Boulder",
+    "sk.c3":"React Basics & React Native — Meta",
+    "ct.eyebrow":"تواصل","ct.h":"لنعمل معاً",
+    "ct.p":"متاح لمهام حرّة في التعلّم الآلي وتحليل البيانات والأمن السيبراني وتطوير الويب. صف لي احتياجك — أردّ خلال 24 ساعة.",
+    "ct.btn":"أرسل بريداً","ct.phone":"الهاتف","ct.loc":"الموقع",
+    "ct.locv":"تونس العاصمة، تونس — عمل عن بُعد حول العالم",
+    "footer.made":"مصمّم ومبرمج يدوياً",
+    "m.close":"إغلاق","m.context":"السياق","m.what":"ما قمت به","m.result":"النتائج"
+  }
+};
+
+/* ===================== PROJECT DETAIL ===================== */
+const PROJ = {
+  nids:{
+    tag:"work.tag.research", badge:"Outstanding",
+    metrics:[["0.9277","p.nids.m1"],["7 → 2","p.nids.m2"],["−17.4","p.nids.m3"]],
+    chips:["PyTorch","NumPy","scikit-learn","pandas","LaTeX"],
+    links:[["https://aminechamam.github.io/Capstone-Website/","site"],["https://github.com/Aminechamam/capstone-nids","code"]],
+    fr:{t:"OCC-NIDS Benchmark",s:"Détection d'intrusion réseau par classification one-class · Projet de fin d'études, supervisé par Dr. Ikram Saadaoui (MedTech)",
+      ctx:["La détection d'intrusion réseau est souvent évaluée dans des conditions trop favorables : fuites de données entre entraînement et test, seuils choisis après coup, comparaisons entre articles aux protocoles incompatibles. Résultat, on ne sait pas vraiment quel détecteur est meilleur, ni pourquoi.","J'ai donc construit un banc d'essai unique et contrôlé pour comparer six détecteurs d'anomalies one-class dans des conditions strictement identiques, sur deux jeux de données de référence."],
+      did:["Implémentation et évaluation de six détecteurs : Isolation Forest, One-Class SVM, PCA-RE, Minimum Covariance Determinant, Autoencoder et Deep SVDD — les deux derniers écrits from scratch en NumPy/PyTorch.","Pipeline d'évaluation sans fuite : tout le préprocessing est ajusté uniquement sur du trafic normal, jamais sur les attaques.","Seuils de décision figés à l'avance via le critère de Youden's J sur un split de validation dédié, pour éviter tout réglage a posteriori.","Évaluation croisée sur UNSW-NB15 et CIC-IDS-2018 avec cache Parquet et acquisition des données via AWS CLI.","Rédaction d'un article scientifique co-écrit à partir de ce benchmark, soumis à une conférence IEEE (en review, 2026)."],
+      res:["Meilleur AUC-ROC de 0.9277 obtenu par l'Autoencoder sur CIC-IDS-2018.","Le classement des modèles n'est pas stable d'un jeu de données à l'autre : un détecteur passe du 7ᵉ au 2ᵉ rang. Autrement dit, un « meilleur modèle » annoncé sur un seul dataset ne veut pas dire grand-chose.","L'agrégation naïve de tous les détecteurs perd 17,4 points face au meilleur modèle seul — l'ensembling n'est pas gratuit.","Mention Outstanding à la soutenance."]},
+    en:{t:"OCC-NIDS Benchmark",s:"Network intrusion detection via one-class classification · Capstone project, supervised by Dr. Ikram Saadaoui (MedTech)",
+      ctx:["Network intrusion detection is usually evaluated under conditions that are too kind: data leakage between training and test, thresholds picked after the fact, cross-paper comparisons with incompatible protocols. The result is that nobody really knows which detector is better, or why.","So I built a single, controlled testbed comparing six one-class anomaly detectors under strictly identical conditions, across two reference datasets."],
+      did:["Implemented and evaluated six detectors: Isolation Forest, One-Class SVM, PCA-RE, Minimum Covariance Determinant, Autoencoder and Deep SVDD — the last two written from scratch in NumPy/PyTorch.","Leakage-free evaluation pipeline: all preprocessing is fitted on normal traffic only, never on attacks.","Decision thresholds frozen in advance via Youden's J on a dedicated validation split, ruling out post-hoc tuning.","Cross-evaluation on UNSW-NB15 and CIC-IDS-2018, with Parquet caching and data acquisition through the AWS CLI.","Co-authored a scientific paper from this benchmark, submitted to an IEEE conference (under review, 2026)."],
+      res:["Best AUC-ROC of 0.9277, achieved by the Autoencoder on CIC-IDS-2018.","Model rankings are not stable across datasets: one detector moves from 7th to 2nd place. A \"best model\" claimed on a single dataset means very little.","Naively ensembling all detectors loses 17.4 points against the single best model — ensembling is not free.","Awarded an Outstanding grade at the defence."]},
+    ar:{t:"اختبار OCC-NIDS المرجعي",s:"كشف الاختراقات الشبكية عبر التصنيف أحادي الفئة · مشروع تخرّج بإشراف د. إكرام سعداوي (MedTech)",
+      ctx:["يُقيَّم كشف الاختراقات الشبكية عادةً في ظروف متساهلة: تسرّب بيانات بين التدريب والاختبار، وعتبات تُختار بعد رؤية النتائج، ومقارنات بين أبحاث ذات بروتوكولات غير متوافقة. والنتيجة أننا لا نعرف حقاً أي كاشف أفضل، ولا لماذا.","لذلك بنيت منصّة اختبار واحدة ومنضبطة تقارن ستة كواشف شذوذ أحادية الفئة في ظروف متطابقة تماماً، على مجموعتَي بيانات مرجعيتين."],
+      did:["تنفيذ وتقييم ستة كواشف: Isolation Forest وOne-Class SVM وPCA-RE وMinimum Covariance Determinant وAutoencoder وDeep SVDD — الأخيران مكتوبان من الصفر بـ NumPy/PyTorch.","مسار تقييم خالٍ من التسرّب: تُضبط كل خطوات المعالجة على حركة المرور الطبيعية فقط، ولا تُضبط أبداً على الهجمات.","تثبيت عتبات القرار مسبقاً عبر معيار Youden's J على تقسيم تحقّق مخصّص، لمنع أي ضبط لاحق للنتائج.","تقييم متقاطع على UNSW-NB15 وCIC-IDS-2018، مع تخزين مؤقت بصيغة Parquet وجلب البيانات عبر AWS CLI.","المشاركة في تأليف بحث علمي انطلاقاً من هذا الاختبار، قُدّم لمؤتمر IEEE (قيد المراجعة، 2026)."],
+      res:["أفضل AUC-ROC بلغ 0.9277، حقّقه نموذج Autoencoder على CIC-IDS-2018.","ترتيب النماذج غير مستقر بين مجموعتَي البيانات: أحد الكواشف انتقل من المركز السابع إلى الثاني. أي أن ادّعاء «أفضل نموذج» بناءً على مجموعة بيانات واحدة لا يعني الكثير.","التجميع البسيط لكل الكواشف يخسر 17.4 نقطة مقارنةً بأفضل نموذج منفرد — فالتجميع ليس مجانياً.","تقدير امتياز في المناقشة."]}
+  },
+  water:{
+    tag:"work.tag.intern", badge:"2023",
+    metrics:[], chips:["ARIMA","SARIMA","LSTM","pandas","Time series"], links:[],
+    fr:{t:"Prévision de consommation d'eau",s:"Stage en machine learning · Be Wireless Solutions, 2023",
+      ctx:["Be Wireless Solutions collecte des relevés de consommation d'eau chez ses clients. L'enjeu : passer d'un historique brut à une prévision fiable de la consommation future, utile pour la facturation, la détection de fuites et le dimensionnement du réseau."],
+      did:["Préparation et nettoyage des données historiques de consommation client : valeurs manquantes, relevés aberrants, régularisation des pas de temps.","Construction et comparaison de deux familles d'approches : statistique classique (ARIMA, SARIMA) et deep learning (LSTM).","Entraînement, réglage des hyperparamètres et évaluation sur des périodes tenues à l'écart, afin que la sélection du modèle reflète une performance réelle et non un surapprentissage."],
+      res:["Un protocole de comparaison clair entre approches statistiques et deep learning sur les données réelles de l'entreprise.","Première expérience professionnelle du cycle complet : données brutes → modèle → évaluation → recommandation."]},
+    en:{t:"Water consumption forecasting",s:"Machine learning internship · Be Wireless Solutions, 2023",
+      ctx:["Be Wireless Solutions collects water consumption readings from its customers. The challenge: turn raw history into a reliable forecast of future consumption, useful for billing, leak detection and network sizing."],
+      did:["Prepared and cleaned historical customer consumption data: missing values, outlier readings, resampling to regular time steps.","Built and compared two families of approaches: classical statistics (ARIMA, SARIMA) and deep learning (LSTM).","Trained, tuned and evaluated on held-out periods so that model selection reflected real performance rather than overfitting."],
+      res:["A clear comparison protocol between statistical and deep learning approaches on the company's real data.","First professional experience of the full cycle: raw data → model → evaluation → recommendation."]},
+    ar:{t:"التنبؤ باستهلاك المياه",s:"تدريب في التعلّم الآلي · Be Wireless Solutions، 2023",
+      ctx:["تجمع شركة Be Wireless Solutions قراءات استهلاك المياه لدى عملائها. والتحدي هو تحويل السجل الخام إلى تنبؤ موثوق بالاستهلاك المستقبلي، بما يفيد في الفوترة وكشف التسربات وتحجيم الشبكة."],
+      did:["تحضير وتنظيف البيانات التاريخية لاستهلاك العملاء: القيم الناقصة، القراءات الشاذة، وتوحيد الفواصل الزمنية.","بناء ومقارنة عائلتين من المقاربات: الإحصاء الكلاسيكي (ARIMA وSARIMA) والتعلّم العميق (LSTM).","التدريب وضبط المعاملات والتقييم على فترات محجوزة، حتى يعكس اختيار النموذج أداءً حقيقياً لا إفراطاً في التعلّم."],
+      res:["بروتوكول مقارنة واضح بين المقاربات الإحصائية والتعلّم العميق على بيانات الشركة الحقيقية.","أول تجربة مهنية للدورة الكاملة: بيانات خام ← نموذج ← تقييم ← توصية."]}
+  },
+  sourire:{
+    tag:"work.tag.ai", badge:"AI assistant",
+    shot:["assets/sourire.jpg","Sourire dental clinic site — clean teal and white layout with a booking hero and today's availability panel"],
+    metrics:[], chips:["HTML/CSS/JS","Chat widget","Conversational UX","Responsive"],
+    links:[["https://aminechamam.github.io/Sourire-Chatbot/","site"]],
+    fr:{t:"Sourire — assistant de prise de rendez-vous",s:"Widget de chat embarquable et site de démonstration pour une clinique dentaire",
+      ctx:["La plupart des petites structures de santé perdent des rendez-vous au téléphone : la ligne est occupée, personne ne répond après 18 h, et les mêmes questions reviennent en boucle — horaires, tarifs, remboursement. J'ai voulu voir jusqu'où un assistant conversationnel pouvait absorber cette charge.","Sourire est une clinique fictive. Le site sert de vitrine réaliste au widget : c'est le widget qui est le vrai livrable, pas la clinique."],
+      did:["Développement d'un widget de chat autonome en JavaScript, injectable sur n'importe quel site avec une seule balise &lt;script&gt;.","Conception de la logique conversationnelle : réponses aux questions courantes (horaires, tarifs, CNAM, urgences) et parcours guidé jusqu'à la réservation d'un créneau.","Création du site vitrine complet en HTML/CSS/JS : page de soins avec tarifs annoncés, panneau de disponibilités du jour, témoignages, structure responsive.","Mention explicite du caractère fictif de la clinique directement sur la page, pour ne jamais laisser croire à un vrai cabinet."],
+      res:["Une démonstration cliquable plutôt qu'une promesse : un prospect peut tester l'assistant en trente secondes, sans installation.","Un composant réutilisable — la même brique s'adapte à un cabinet, un restaurant ou un salon, en changeant uniquement le contenu et le ton."]},
+    en:{t:"Sourire — appointment booking assistant",s:"Embeddable chat widget and demo site for a dental clinic",
+      ctx:["Most small health practices lose appointments on the phone: the line is busy, nobody answers after 6pm, and the same questions come back on loop — opening hours, prices, insurance. I wanted to see how much of that load a conversational assistant could absorb.","Sourire is a fictional clinic. The site is a realistic showcase for the widget: the widget is the actual deliverable, not the clinic."],
+      did:["Built a self-contained chat widget in JavaScript, droppable into any site with a single &lt;script&gt; tag.","Designed the conversational logic: answers to common questions (hours, pricing, insurance, emergencies) and a guided path through to booking a slot.","Built the full showcase site in HTML/CSS/JS: a treatments page with prices stated up front, a today's-availability panel, testimonials, responsive throughout.","Stated the clinic's fictional nature explicitly on the page, so nobody mistakes it for a real practice."],
+      res:["A clickable demo rather than a promise: a prospect can test the assistant in thirty seconds, with nothing to install.","A reusable component — the same building block adapts to a clinic, a restaurant or a salon by changing only the content and the tone."]},
+    ar:{t:"Sourire — مساعد حجز المواعيد",s:"أداة محادثة قابلة للدمج وموقع توضيحي لعيادة أسنان",
+      ctx:["تفقد أغلب العيادات الصغيرة مواعيد بسبب الهاتف: الخط مشغول، ولا أحد يجيب بعد السادسة مساءً، وتتكرّر الأسئلة نفسها — المواعيد، الأسعار، التأمين. أردت معرفة حجم ما يمكن لمساعد محادثة أن يستوعبه من هذا العبء.","Sourire عيادة متخيّلة. الموقع واجهة واقعية للأداة: الأداة هي المنتج الحقيقي، لا العيادة."],
+      did:["تطوير أداة محادثة مستقلة بلغة JavaScript، يمكن دمجها في أي موقع بوسم &lt;script&gt; واحد.","تصميم منطق المحادثة: إجابات عن الأسئلة الشائعة (المواعيد، الأسعار، التأمين، الحالات الطارئة) ومسار موجّه حتى حجز موعد.","بناء الموقع التوضيحي كاملاً بـ HTML/CSS/JS: صفحة علاجات بأسعار معلنة مسبقاً، ولوحة توفّر اليوم، وشهادات، وتصميم متجاوب.","الإشارة صراحةً داخل الصفحة إلى أن العيادة متخيّلة، حتى لا يظنّها أحد عيادة حقيقية."],
+      res:["عرض قابل للتجربة بدل وعد مجرّد: يستطيع العميل المحتمل اختبار المساعد في ثلاثين ثانية دون أي تثبيت.","مكوّن قابل لإعادة الاستخدام — تتكيّف اللبنة نفسها مع عيادة أو مطعم أو صالون بتغيير المحتوى والنبرة فقط."]}
+  },
+  xhamsin:{
+    tag:"work.tag.creative", badge:"Brand",
+    shot:["assets/xhamsin.jpg","XHAMSIN brand site — serif wordmark over a hand-drawn dune and waveform illustration"],
+    metrics:[], chips:["HTML/CSS/JS","Brand identity","Audio player","Licensing"],
+    links:[["https://aminechamam.github.io/XHAMSIN-Website/","site"]],
+    fr:{t:"XHAMSIN",s:"Projet musical indépendant et site de marque — beatmaking ambient / lofi / fusion maghrébine",
+      ctx:["XHAMSIN est mon projet créatif personnel : de la production musicale à la marque qui l'entoure. J'y assume tous les rôles — producteur, directeur artistique, développeur — ce qui en fait un bon terrain d'essai pour tout ce que je ne peux pas tester ailleurs."],
+      did:["Conception de l'identité visuelle complète : nom, univers graphique, typographie, ton.","Développement du site de A à Z en HTML/CSS/JS, sans framework ni template.","Intégration d'un lecteur audio pour écouter les productions directement dans la page.","Mise en place d'une structure de licensing claire pour l'utilisation des instrumentaux."],
+      res:["Un projet complet qui prouve que je sais tenir une chaîne entière : création, mise en forme, mise en ligne, monétisation.","Une vitrine directe de mes compétences front-end appliquées à un contexte de marque, pas seulement technique."]},
+    en:{t:"XHAMSIN",s:"Independent music project and brand site — ambient / lofi / Maghreb-fusion beatmaking",
+      ctx:["XHAMSIN is my personal creative project: from music production to the brand around it. I hold every role — producer, art director, developer — which makes it a good testbed for things I can't try anywhere else."],
+      did:["Designed the full visual identity: name, graphic world, typography, tone of voice.","Built the site from scratch in HTML/CSS/JS, no framework, no template.","Integrated an audio player so productions can be listened to directly on the page.","Set up a clear licensing structure for use of the instrumentals."],
+      res:["A complete project proving I can own an entire chain: creation, presentation, shipping, monetisation.","A direct showcase of my front-end skills applied to a brand context, not just a technical one."]},
+    ar:{t:"XHAMSIN",s:"مشروع موسيقي مستقل وموقع علامته — إنتاج أمبيانت / لوفاي / مزيج مغاربي",
+      ctx:["XHAMSIN هو مشروعي الإبداعي الشخصي: من الإنتاج الموسيقي إلى العلامة المحيطة به. أتولّى فيه كل الأدوار — منتج ومدير فني ومطوّر — ما يجعله ميداناً مثالياً لتجربة ما لا أستطيع تجربته في مكان آخر."],
+      did:["تصميم الهوية البصرية الكاملة: الاسم، العالم الجرافيكي، الخطوط، ونبرة الخطاب.","تطوير الموقع من الصفر بـ HTML/CSS/JS، دون إطار عمل أو قالب جاهز.","دمج مشغّل صوتي للاستماع إلى الإنتاجات مباشرة داخل الصفحة.","إرساء بنية ترخيص واضحة لاستخدام المقطوعات الموسيقية."],
+      res:["مشروع متكامل يثبت قدرتي على إدارة سلسلة كاملة: الإبداع، العرض، النشر، وتحقيق الدخل.","واجهة مباشرة لمهاراتي في تطوير الواجهات مطبّقة في سياق علامة تجارية، لا سياق تقني فحسب."]}
+  },
+  site:{
+    tag:"work.tag.web", badge:"Front-end",
+    shot:["assets/occnids.jpg","OCC-NIDS benchmark site — dark editorial layout with headline metrics and a rank-comparison chart"],
+    metrics:[], chips:["HTML/CSS/JS","Data storytelling","Scroll animation","Responsive"],
+    links:[["https://aminechamam.github.io/Capstone-Website/","site"]],
+    fr:{t:"Site du benchmark OCC-NIDS",s:"Data storytelling scientifique — entièrement codé à la main",
+      ctx:["Un benchmark n'a d'intérêt que s'il est lisible. Plutôt que de livrer un PDF de plus, j'ai transformé les résultats de mon capstone en un site conçu pour être parcouru : chaque résultat arrive dans un ordre pensé, avec le contexte nécessaire pour le comprendre."],
+      did:["Structure éditoriale complète : hiérarchie des sections, progression narrative des résultats.","Mise en page de données : tableaux comparatifs, métriques mises en valeur, courbes lisibles sur mobile comme sur desktop.","Animations au scroll pour rythmer la lecture sans distraire.","Développement intégral en HTML/CSS/JS, sans framework."],
+      res:["Un support de soutenance et de diffusion qui rend un travail de recherche accessible à un lecteur non spécialiste.","Une démonstration concrète de mes compétences front-end sur un contenu dense et technique."]},
+    en:{t:"OCC-NIDS benchmark website",s:"Scientific data storytelling — hand-coded throughout",
+      ctx:["A benchmark is only useful if it can be read. Rather than ship yet another PDF, I turned my capstone results into a site designed to be walked through: every result arrives in a deliberate order, with the context needed to understand it."],
+      did:["Full editorial structure: section hierarchy, narrative progression of the results.","Data layout: comparison tables, highlighted metrics, curves that stay readable on mobile and desktop.","Scroll animations to pace the reading without distracting from it.","Built entirely in HTML/CSS/JS, no framework."],
+      res:["A defence and dissemination medium that makes research work accessible to a non-specialist reader.","A concrete demonstration of my front-end skills applied to dense, technical content."]},
+    ar:{t:"موقع اختبار OCC-NIDS",s:"سرد بصري للبيانات العلمية — مكتوب يدوياً بالكامل",
+      ctx:["لا قيمة لأي اختبار مرجعي ما لم يكن قابلاً للقراءة. فبدلاً من إصدار ملف PDF إضافي، حوّلت نتائج مشروع تخرّجي إلى موقع مصمّم ليُتصفّح: كل نتيجة تصل في ترتيب مدروس، مع السياق اللازم لفهمها."],
+      did:["بنية تحريرية كاملة: تسلسل الأقسام وتدرّج سردي للنتائج.","عرض البيانات: جداول مقارنة، مؤشرات مبرزة، ومنحنيات تبقى واضحة على الهاتف والحاسوب.","حركات عند التمرير تنظّم إيقاع القراءة دون تشتيت.","تطوير كامل بـ HTML/CSS/JS دون أي إطار عمل."],
+      res:["وسيلة مناقشة ونشر تجعل عملاً بحثياً في متناول قارئ غير متخصص.","برهان ملموس على مهاراتي في تطوير الواجهات على محتوى تقني كثيف."]}
+  },
+  pptx:{
+    tag:"work.tag.tool", badge:"Node.js",
+    metrics:[], chips:["Node.js","pptxgenjs","Automation"], links:[],
+    fr:{t:"Générateur de présentations",s:"Automatisation de production de decks avec pptxgenjs (Node.js)",
+      ctx:["Produire des présentations à la main est répétitif et fragile : la mise en forme dérive, les données sont recopiées, chaque mise à jour recommence tout. J'ai préféré coder la production plutôt que de la refaire."],
+      did:["Développement d'un outil Node.js s'appuyant sur pptxgenjs pour générer des présentations complètes par script.","Séparation nette entre contenu (données) et gabarit (mise en forme), pour que la mise à jour du contenu ne casse jamais le design.","Génération reproductible : le même script produit toujours le même deck."],
+      res:["Un exemple concret de ma logique de travail : quand une tâche revient, je l'outille au lieu de la répéter.","Une compétence directement transposable à d'autres besoins clients : rapports automatisés, exports de données, documents générés."]},
+    en:{t:"Presentation generator",s:"Automated deck production with pptxgenjs (Node.js)",
+      ctx:["Producing presentations by hand is repetitive and fragile: formatting drifts, data gets retyped, every update starts from zero. I preferred to code the production rather than redo it."],
+      did:["Built a Node.js tool on top of pptxgenjs to generate full presentations from a script.","Clean separation between content (data) and template (formatting), so updating content never breaks the design.","Reproducible generation: the same script always produces the same deck."],
+      res:["A concrete example of how I work: when a task recurs, I tool it instead of repeating it.","A skill that transfers directly to other client needs: automated reports, data exports, generated documents."]},
+    ar:{t:"مولّد العروض التقديمية",s:"أتمتة إنتاج العروض عبر pptxgenjs (Node.js)",
+      ctx:["إعداد العروض يدوياً عمل متكرر وهشّ: التنسيق ينحرف، والبيانات تُعاد كتابتها، وكل تحديث يبدأ من الصفر. ففضّلت برمجة الإنتاج بدل إعادته."],
+      did:["تطوير أداة بـ Node.js تعتمد على pptxgenjs لتوليد عروض كاملة عبر سكربت.","فصل واضح بين المحتوى (البيانات) والقالب (التنسيق)، بحيث لا يُفسد تحديث المحتوى التصميم أبداً.","توليد قابل للتكرار: السكربت نفسه ينتج العرض نفسه دائماً."],
+      res:["مثال ملموس على طريقة عملي: حين تتكرّر مهمة، أبني لها أداة بدل تكرارها.","مهارة تنتقل مباشرة إلى احتياجات عملاء أخرى: تقارير آلية، تصدير بيانات، مستندات مولّدة."]}
+  }
+};
+
+/* ===================== LANG ===================== */
+let LANG = localStorage.getItem('mac-lang') || 'en';
+
+function setLang(l){
+  LANG = l;
+  localStorage.setItem('mac-lang', l);
+  const d = I18N[l];
+  document.documentElement.lang = l;
+  document.documentElement.dir = (l === 'ar') ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k = el.getAttribute('data-i18n');
+    if(d[k]) el.textContent = d[k];
+  });
+  document.querySelectorAll('#lang button').forEach(b=>b.classList.toggle('on', b.dataset.lang === l));
+  if(openId) renderModal(openId);
+}
+
+document.getElementById('lang').addEventListener('click', e=>{
+  const b = e.target.closest('button');
+  if(b) setLang(b.dataset.lang);
+});
+
+/* ===================== MODAL ===================== */
+const ov = document.getElementById('ov'), modal = document.getElementById('modal');
+let openId = null, lastFocus = null;
+
+function renderModal(id){
+  const p = PROJ[id], c = p[LANG], d = I18N[LANG];
+  const metrics = p.metrics.length ? `<div class="metrics">${p.metrics.map(m=>`<div><span class="m-v">${m[0]}</span><span class="m-l">${d[m[1]]}</span></div>`).join('')}</div>` : '';
+  const links = p.links.length ? `<div class="m-links">${p.links.map(l=>`<a class="btn ${l[1]==='site'?'btn-p':'btn-s'}" href="${l[0]}" target="_blank" rel="noopener">${l[1]==='site'?(LANG==='fr'?'Voir le site':LANG==='en'?'Visit the site':'زيارة الموقع'):(LANG==='fr'?'Code source':LANG==='en'?'Source code':'الشيفرة المصدرية')} <span class="arw">↗</span></a>`).join('')}</div>` : '';
+  const shot = p.shot ? `<img class="m-shot" src="${p.shot[0]}" loading="lazy" decoding="async" alt="${p.shot[1]}">` : '';
+  modal.innerHTML = `
+    <button class="m-close" id="mClose" aria-label="${d['m.close']}">×</button>
+    <span class="badge ml">${d[p.tag]}</span>
+    <h3>${c.t}</h3>
+    <div class="m-sub">${c.s}</div>
+    ${shot}
+    <div class="chips">${p.chips.map(x=>`<span class="chip">${x}</span>`).join('')}</div>
+    ${metrics}
+    <div class="m-h">${d['m.context']}</div>
+    <div class="m-body">${c.ctx.map(x=>`<p>${x}</p>`).join('')}</div>
+    <div class="m-h">${d['m.what']}</div>
+    <ul class="m-list">${c.did.map(x=>`<li>${x}</li>`).join('')}</ul>
+    <div class="m-h">${d['m.result']}</div>
+    <ul class="m-list">${c.res.map(x=>`<li>${x}</li>`).join('')}</ul>
+    ${links}`;
+  document.getElementById('mClose').addEventListener('click', close);
+}
+function openModal(id){
+  lastFocus = document.activeElement;
+  openId = id; renderModal(id);
+  ov.classList.add('on'); document.body.style.overflow = 'hidden';
+  modal.scrollTop = 0;
+  setTimeout(()=>document.getElementById('mClose')?.focus(), 60);
+}
+function close(){
+  openId = null; ov.classList.remove('on'); document.body.style.overflow = '';
+  lastFocus?.focus();
+}
+document.querySelectorAll('[data-proj]').forEach(el=>{
+  el.addEventListener('click', ()=>openModal(el.dataset.proj));
+  el.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModal(el.dataset.proj); } });
+});
+ov.addEventListener('click', e=>{ if(e.target === ov) close(); });
+document.addEventListener('keydown', e=>{ if(e.key === 'Escape' && openId) close(); });
+
+/* ===================== NAV ===================== */
+const nav = document.getElementById('nav');
+addEventListener('scroll', ()=> nav.classList.toggle('scrolled', scrollY > 12), {passive:true});
+document.getElementById('burger').addEventListener('click', ()=> nav.classList.toggle('open'));
+document.getElementById('navLinks').addEventListener('click', ()=> nav.classList.remove('open'));
+
+const secs = [...document.querySelectorAll('section[id]')];
+const navA = [...document.querySelectorAll('.nav-links a')];
+addEventListener('scroll', ()=>{
+  const y = scrollY + 90;
+  let cur = '';
+  secs.forEach(s=>{ if(s.offsetTop <= y) cur = s.id; });
+  navA.forEach(a=>a.classList.toggle('active', a.getAttribute('href') === '#'+cur));
+}, {passive:true});
+
+/* ===================== REVEAL + COUNTERS + BARS ===================== */
+const io = new IntersectionObserver((es)=>{
+  es.forEach(e=>{
+    if(!e.isIntersecting) return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('[data-w]').forEach(b=> b.style.width = b.dataset.w + '%');
+    const c = e.target.querySelector('[data-count]');
+    if(c && !c.dataset.done){
+      c.dataset.done = 1;
+      const end = parseFloat(c.dataset.count), dec = (c.dataset.count.split('.')[1]||'').length;
+      const t0 = performance.now(), dur = 1100;
+      const tick = t=>{
+        const k = Math.min((t-t0)/dur, 1), e2 = 1-Math.pow(1-k,3);
+        c.textContent = (end*e2).toFixed(dec);
+        if(k<1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+    io.unobserve(e.target);
+  });
+},{threshold:.14, rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.rv').forEach((el,i)=>{ el.style.transitionDelay = (i%6)*45 + 'ms'; io.observe(el); });
+
+/* ===================== CARD SPOTLIGHT ===================== */
+document.addEventListener('pointermove', e=>{
+  const c = e.target.closest('.card');
+  if(!c) return;
+  const r = c.getBoundingClientRect();
+  c.style.setProperty('--mx', (e.clientX-r.left)+'px');
+  c.style.setProperty('--my', (e.clientY-r.top)+'px');
+}, {passive:true});
+
+setLang(LANG);
+</script>
+</body>
+</html>
